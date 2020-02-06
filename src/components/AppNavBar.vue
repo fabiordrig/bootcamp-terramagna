@@ -1,6 +1,6 @@
 <template>
   <nav class="nav">
-    <v-toolbar color="success" flat app>
+    <v-toolbar color="primary" flat app>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>
         <span>TERRA MAGNA - BOOTCAMP FRONT END</span>

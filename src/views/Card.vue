@@ -1,20 +1,22 @@
 <template>
-  <v-container>
+  <v-container fluid grid-list-md>
     <v-layout row wrap>
-      <v-flex xs4 sm4>
+      <v-flex v-for="card in cards" :key="card.title" xs6>
         <v-card>
-          <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" aspect-ratio="2.75"></v-img>
-
-          <v-card-title primary-title>
-            <div>
-              <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-              <div>{{ card_text }}</div>
-            </div>
-          </v-card-title>
+          <v-card-title primary-title>{{ card.title }}</v-card-title>
+          <v-card-text v-for="item in card.items" :key="item.id">
+            <v-checkbox v-if="item.type == 'checkbox'" :label="item.text"></v-checkbox>
+            <v-text-field v-else v-model="item.result" :label="item.text"></v-text-field>
+          </v-card-text>
 
           <v-card-actions>
-            <v-btn flat color="orange">Share</v-btn>
-            <v-btn flat color="orange">Explore</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn icon>
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+            <v-btn icon>
+              <v-icon>close</v-icon>
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -23,10 +25,25 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      item
-    };
-  }
+  data: () => ({
+    cards: [
+      {
+        title: "Pre-fab homes",
+        items: [
+          { text: "FAzer x coisas", type: "checkbox" },
+          { text: "HELLLOOO", type: "checkbox" },
+          { text: "fazer alo", type: "input", result: null }
+        ]
+      },
+      {
+        title: "Pre-fab homes",
+        items: [
+          { text: "FAzer x coisas", type: "checkbox" },
+          { text: "HELLLOOO", type: "checkbox" },
+          { text: "fazer alo", type: "input", result: null }
+        ]
+      }
+    ]
+  })
 };
 </script>
