@@ -8,7 +8,6 @@
             <v-checkbox v-if="item.type == 'checkbox'" :label="item.text"></v-checkbox>
             <v-text-field v-else v-model="item.result" :label="item.text"></v-text-field>
           </v-card-text>
-
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn icon>
@@ -21,10 +20,16 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <CreateCard :active="true" />
   </v-container>
 </template>
 <script>
+import CreateCard from "@/components/CreateCard.vue";
+
 export default {
+  components: {
+    CreateCard
+  },
   data: () => ({
     cards: [
       {
