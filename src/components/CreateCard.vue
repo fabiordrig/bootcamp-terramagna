@@ -89,7 +89,7 @@ export default {
     },
     excludeTask(index) {
       console.log(index);
-      this.tasks.slice(index, 1);
+      this.tasks = this.tasks.splice(index, 1);
     }
   }
 };
