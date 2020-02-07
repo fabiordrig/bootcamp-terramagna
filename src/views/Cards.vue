@@ -41,7 +41,7 @@ export default {
         ]
       },
       {
-        title: "Pre-fab homes",
+        title: "Pre-sadasdas homes",
         items: [
           { text: "FAzer x coisas", type: "checkbox" },
           { text: "HELLLOOO", type: "checkbox" },
