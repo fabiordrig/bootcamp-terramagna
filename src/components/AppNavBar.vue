@@ -38,7 +38,6 @@
         </v-list-group>
       </v-list>
     </v-navigation-drawer>
-    <CreateCard :active="createTask" />
   </nav>
 </template>
 
@@ -47,9 +46,6 @@ import Vue from "vue";
 import CreateCard from "./CreateCard.vue";
 export default Vue.extend({
   name: "the-navbar",
-  components: {
-    CreateCard
-  },
   data() {
     return {
       drawer: false,
@@ -66,7 +62,6 @@ export default Vue.extend({
     };
   },
   methods: {
-    creatingNewCard() {},
     handleCloseDrawer() {
       this.drawer = false;
     },
