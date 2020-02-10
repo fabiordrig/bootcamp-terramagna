@@ -41,14 +41,14 @@
               <v-text-field v-else v-model="task.text" disabled></v-text-field>
             </v-flex>
             <v-flex shrink pa-1>
-              <v-btn @click="excludeTask(index)" icon>
+              <v-btn @click="excludeTask(task.id)" icon>
                 <v-icon>close</v-icon>
               </v-btn>
             </v-flex>
           </v-layout>
         </v-container>
       </v-card-text>
-      <v-snackbar v-model="snackbar" right color="error" timeout="3000">
+      <v-snackbar v-model="snackbar" right color="error" :timeout="3000">
         Preencha todos os dados para criar sua lista de tarefas
         <v-btn dark flat @click="snackbar = false">
           <v-icon>close</v-icon>
@@ -98,13 +98,14 @@ export default {
         text: this.text,
         type: this.radioGroup,
         state: "NOT_DONE",
+        result: null,
         doneAt: null
       };
       this.tasks.push(obj);
       this.text = null;
     },
-    excludeTask(index) {
-      this.tasks = this.tasks.splice(index, 1);
+    excludeTask(id) {
+      this.tasks = this.tasks.filter(task => task.id !== id);
     },
     saveAllTasks() {
       if (!this.title || !this.radioGroup) {
@@ -130,6 +131,7 @@ export default {
       this.text = null;
       this.tasks = [];
       this.active = false;
+      this.$parent.$emit("refreshData");
     },
     newId() {
       return "xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx".replace(/[xy]/g, function(c) {
