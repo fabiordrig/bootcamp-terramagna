@@ -15,7 +15,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn icon>
+            <v-btn icon @click="editingTask(card)">
               <v-icon>mdi-plus</v-icon>
             </v-btn>
             <v-btn icon @click="excludeCard(card.id)">
@@ -30,7 +30,7 @@
         <v-icon>add</v-icon>
       </v-btn>
     </v-fab-transition>
-    <CreateCard :active="active" />
+    <CreateCard :active="active" :task="task" />
   </v-container>
 </template>
 <script>
@@ -40,6 +40,11 @@ export default {
   components: {
     CreateCard
   },
+  data: () => ({
+    active: false,
+    lists: [],
+    task: null
+  }),
   created() {
     this.lists = JSON.parse(localStorage.getItem("lists"));
     this.$on("refreshData", this.refreshData);
@@ -53,14 +58,16 @@ export default {
       this.lists = JSON.parse(localStorage.getItem("lists"));
       this.active = false;
     },
+    editingTask(card) {
+      this.task = card;
+      this.active = true;
+      this.$emit("setValue");
+    },
     activatedCard() {
       this.active = true;
+      this.task = null;
     }
-  },
-  data: () => ({
-    active: false,
-    lists: []
-  })
+  }
 };
 </script>
 <style lang="scss" scoped>

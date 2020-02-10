@@ -6,7 +6,7 @@
         <v-container>
           <v-layout row>
             <v-flex grow pa-1>
-              <v-text-field v-model="title" label="Insira o titulo d tarefa"></v-text-field>
+              <v-text-field v-model="title" label="Insira o titulo da tarefa"></v-text-field>
             </v-flex>
           </v-layout>
           <v-layout v-if="title" row wrap>
@@ -56,7 +56,7 @@
       </v-snackbar>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="error" text @click="active = false">cancelar</v-btn>
+        <v-btn color="error" text @click="closeModal">cancelar</v-btn>
         <v-btn color="success" text @click="saveAllTasks">salvar nova lista</v-btn>
       </v-card-actions>
     </v-card>
@@ -65,7 +65,11 @@
 <script>
 export default {
   props: {
-    active: Boolean
+    active: Boolean,
+    task: Object
+  },
+  created() {
+    this.$on("setValue", this.setValue());
   },
   data() {
     return {
@@ -104,8 +108,19 @@ export default {
       this.tasks.push(obj);
       this.text = null;
     },
+    setValue() {
+      this.title = this.task.title;
+      this.text = null;
+      this.tasks = this.task.items;
+    },
     excludeTask(id) {
       this.tasks = this.tasks.filter(task => task.id !== id);
+    },
+    closeModal() {
+      this.$parent.$emit("refreshData");
+      this.title = null;
+      this.text = null;
+      this.tasks = [];
     },
     saveAllTasks() {
       if (!this.title || !this.radioGroup) {
@@ -139,6 +154,11 @@ export default {
           v = c == "x" ? r : (r & 0x3) | 0x8;
         return v.toString(16);
       });
+    }
+  },
+  watch: {
+    task() {
+      this.setValue();
     }
   }
 };
