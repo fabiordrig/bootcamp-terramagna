@@ -38,17 +38,23 @@
         </v-list-group>
       </v-list>
     </v-navigation-drawer>
+    <CreateCard :active="createTask" />
   </nav>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import CreateCard from "./CreateCard.vue";
 export default Vue.extend({
   name: "the-navbar",
+  components: {
+    CreateCard
+  },
   data() {
     return {
       drawer: false,
       mini: false,
+      createTask: false,
       iconColor: "#000",
       items: [
         {
@@ -60,6 +66,7 @@ export default Vue.extend({
     };
   },
   methods: {
+    creatingNewCard() {},
     handleCloseDrawer() {
       this.drawer = false;
     },
