@@ -75,7 +75,7 @@ export default {
     return {
       radioGroup: "input",
       snackbar: false,
-      title: String,
+      title: null,
       text: null,
       tasks: [],
       optionList: [
