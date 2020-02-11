@@ -62,11 +62,13 @@
     </v-card>
   </v-dialog>
 </template>
-<script>
+<script lang="ts">
+import TaskObject from "@/@types/index.ts";
+
 export default {
   props: {
     active: Boolean,
-    task: Object
+    task: Object as () => TaskObject
   },
   created() {
     this.$on("setValue", this.setValue());
