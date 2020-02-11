@@ -75,7 +75,7 @@ export default {
     return {
       radioGroup: "input",
       snackbar: false,
-      title: null,
+      title: String,
       text: null,
       tasks: [],
       optionList: [
@@ -109,6 +109,7 @@ export default {
       this.text = null;
     },
     setValue() {
+      if (!this.task) return;
       this.title = this.task.title;
       this.text = null;
       this.tasks = this.task.items;
