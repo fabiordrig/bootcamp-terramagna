@@ -10,8 +10,18 @@
         <v-card>
           <v-card-title primary-title>{{ card.title }}</v-card-title>
           <v-card-text v-for="item in card.items" :key="item.id">
-            <v-checkbox v-if="item.type == 'checkbox'" :label="item.text"></v-checkbox>
-            <v-text-field v-else v-model="item.result" :label="item.text"></v-text-field>
+            <v-checkbox
+              v-if="item.type == 'checkbox'"
+              v-model="item.result"
+              @change="finishTask(item)"
+              :label="item.text"
+            ></v-checkbox>
+            <v-text-field
+              v-else
+              v-model="item.result"
+              @change="finishTask(item)"
+              :label="item.text"
+            ></v-text-field>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -66,6 +76,18 @@ export default {
     activatedCard() {
       this.active = true;
       this.task = null;
+    },
+    finishTask(item) {
+      let list = JSON.parse(localStorage.getItem("lists"));
+      list.forEach(child => {
+        child.items.forEach(subChild => {
+          if (subChild.id === item.id) {
+            subChild.result = item.result;
+          }
+        });
+      });
+      localStorage.setItem("lists", JSON.stringify(list));
+      this.refreshData();
     }
   }
 };
