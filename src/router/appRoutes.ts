@@ -1,6 +1,9 @@
-const List = () => import(/* webpackChunkName: "about" */ "../views/Cards.vue");
+const Cards = () =>
+  import(/* webpackChunkName: "Cards" */ "../views/Cards.vue");
 
-export default {
-  path: "/lists",
-  component: List
-};
+export default [
+  {
+    path: "/lists",
+    component: Cards
+  }
+];

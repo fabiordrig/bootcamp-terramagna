@@ -63,15 +63,13 @@
   </v-dialog>
 </template>
 <script lang="ts">
-import TaskObject from "@/@types/index.ts";
+import Vue from "vue";
+import { Tasks } from "@/@types";
 
-export default {
+export default Vue.extend({
   props: {
     active: Boolean,
-    task: Object as () => TaskObject
-  },
-  created() {
-    this.$on("setValue", this.setValue());
+    task: Object as () => Tasks
   },
   data() {
     return {
@@ -131,7 +129,7 @@ export default {
         return false;
       }
 
-      let items = JSON.parse(localStorage.getItem("lists", items));
+      let items = JSON.parse(localStorage.getItem("lists"));
 
       let newTask = {
         id: this.newId(),
@@ -160,9 +158,10 @@ export default {
     }
   },
   watch: {
-    task() {
+    task(to, from) {
+      if (to) return;
       this.setValue();
     }
   }
-};
+});
 </script>

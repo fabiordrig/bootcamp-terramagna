@@ -5,7 +5,8 @@
 </template>
 
 <script>
-export default {
+import Vue from "vue";
+export default Vue.extend({
   name: "App",
   components: {},
   data() {
@@ -13,5 +14,5 @@ export default {
       //
     };
   }
-};
+});
 </script>
