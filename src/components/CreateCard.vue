@@ -71,6 +71,9 @@ export default Vue.extend({
     active: Boolean,
     task: Object as () => Tasks
   },
+  created() {
+    this.$on("setValue", this.setValue);
+  },
   data() {
     return {
       radioGroup: "input",
@@ -158,8 +161,7 @@ export default Vue.extend({
     }
   },
   watch: {
-    task(to, from) {
-      if (to) return;
+    task() {
       this.setValue();
     }
   }
