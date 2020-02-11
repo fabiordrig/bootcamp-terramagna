@@ -43,10 +43,11 @@
     <CreateCard :active="active" :task="task" />
   </v-container>
 </template>
-<script>
+<script lang="ts">
+import Vue from "vue";
 import CreateCard from "@/components/CreateCard.vue";
 
-export default {
+export default Vue.extend({
   components: {
     CreateCard
   },
@@ -90,7 +91,7 @@ export default {
       this.refreshData();
     }
   }
-};
+});
 </script>
 <style lang="scss" scoped>
 </style>

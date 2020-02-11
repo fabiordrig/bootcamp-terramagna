@@ -10,8 +10,8 @@ const routes = [
     path: "/",
     name: "home",
     component: Home,
-    redirect: "/list",
-    children: [appRoutes]
+    redirect: "/lists",
+    children: [...appRoutes]
   }
 ];
 
