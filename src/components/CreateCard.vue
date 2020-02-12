@@ -119,10 +119,16 @@ export default Vue.extend({
       this.tasks = this.task.items;
     },
     excludeTask(id) {
-      this.tasks = this.tasks.filter(task => task.id !== id);
+      let payload = {
+        id: id,
+        tasks: this.tasks
+      };
+      this.$store.dispatch("excludeTask", payload).then(newTasks => {
+        this.tasks = newTasks;
+      });
     },
     closeModal() {
-      this.$store.actions.refreshData;
+      this.$store.dispatch("refreshData");
       this.title = null;
       this.text = null;
       this.tasks = [];
@@ -135,23 +141,33 @@ export default Vue.extend({
 
       let items = JSON.parse(localStorage.getItem("lists"));
 
-      let newTask = {
-        id: newId(),
-        title: this.title,
-        createAt: new Date(),
-        updatedAt: new Date(),
-        items: this.tasks
-      };
+      if (!this.task) {
+        let newTask = {
+          id: newId(),
+          title: this.title,
+          createAt: new Date(),
+          updatedAt: new Date(),
+          items: this.tasks
+        };
 
-      if (!items) items = [];
-      items.push(newTask);
+        if (!items) items = [];
+        items.push(newTask);
+      } else {
+        items.forEach(item => {
+          if (item.title === this.task.title) {
+            item.title = this.title;
+            item.updatedAt = new Date();
+            item.items = this.tasks;
+          }
+        });
+      }
 
       localStorage.setItem("lists", JSON.stringify(items));
       this.title = null;
       this.text = null;
       this.tasks = [];
       this.active = false;
-      this.$parent.$emit("refreshData");
+      this.$store.dispatch("refreshData");
     }
   },
   watch: {

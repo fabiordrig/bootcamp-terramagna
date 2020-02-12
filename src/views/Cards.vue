@@ -60,10 +60,15 @@ export default Vue.extend({
     this.lists = JSON.parse(localStorage.getItem("lists"));
     this.$on("refreshData", this.refreshData);
   },
+  computed: {
+    muted() {
+      return this.$store.state.refreshData;
+    }
+  },
   methods: {
     excludeCard(id) {
-      this.lists = this.lists.filter(task => task.id !== id);
-      localStorage.setItem("lists", JSON.stringify(this.lists));
+      this.$store.dispatch("excludeCard", id);
+      this.lists = JSON.parse(localStorage.getItem("lists"));
     },
     refreshData() {
       this.lists = JSON.parse(localStorage.getItem("lists"));
@@ -88,6 +93,11 @@ export default Vue.extend({
         });
       });
       localStorage.setItem("lists", JSON.stringify(list));
+      this.refreshData();
+    }
+  },
+  watch: {
+    muted() {
       this.refreshData();
     }
   }
