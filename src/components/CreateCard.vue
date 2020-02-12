@@ -109,7 +109,6 @@ export default Vue.extend({
         result: null,
         doneAt: null
       };
-      console.log(obj);
       this.tasks.push(obj);
       this.text = null;
     },
@@ -123,7 +122,7 @@ export default Vue.extend({
       this.tasks = this.tasks.filter(task => task.id !== id);
     },
     closeModal() {
-      this.$parent.$emit("refreshData");
+      this.$store.actions.refreshData;
       this.title = null;
       this.text = null;
       this.tasks = [];
