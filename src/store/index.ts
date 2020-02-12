@@ -6,6 +6,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {},
   mutations: {},
-  actions: {},
+  actions: {
+    refreshData({ commit }) {
+      console.log(commit, "HELOOO");
+      commit(this.$parent.$emit("refreshData"));
+    }
+  },
   modules: {}
 });
