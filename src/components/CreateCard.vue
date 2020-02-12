@@ -37,7 +37,7 @@
         <v-container>
           <v-layout v-for="(task, index) in tasks" :key="index" row>
             <v-flex grow pa-1>
-              <v-checkbox v-if="task.type === 'checkbox'" :label="task.text" disabled hide-details></v-checkbox>
+              <v-checkbox v-if="task.type === 'checkbox'" :label="task.text" disabled hide-details />
               <v-text-field v-else v-model="task.text" disabled></v-text-field>
             </v-flex>
             <v-flex shrink pa-1>
@@ -65,6 +65,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { Tasks } from "@/@types";
+import { newId } from "@/utils";
 
 export default Vue.extend({
   props: {
@@ -101,13 +102,14 @@ export default Vue.extend({
       }
 
       let obj = {
-        id: this.newId(),
+        id: newId(),
         text: this.text,
         type: this.radioGroup,
         state: "NOT_DONE",
         result: null,
         doneAt: null
       };
+      console.log(obj);
       this.tasks.push(obj);
       this.text = null;
     },
@@ -135,7 +137,7 @@ export default Vue.extend({
       let items = JSON.parse(localStorage.getItem("lists"));
 
       let newTask = {
-        id: this.newId(),
+        id: newId(),
         title: this.title,
         createAt: new Date(),
         updatedAt: new Date(),
@@ -151,13 +153,6 @@ export default Vue.extend({
       this.tasks = [];
       this.active = false;
       this.$parent.$emit("refreshData");
-    },
-    newId() {
-      return "xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx".replace(/[xy]/g, function(c) {
-        var r = (Math.random() * 16) | 0,
-          v = c == "x" ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-      });
     }
   },
   watch: {
