@@ -6,14 +6,17 @@
         <v-container>
           <v-layout row>
             <v-flex grow pa-1>
-              <v-text-field v-model="title" label="Insira o titulo da tarefa"></v-text-field>
+              <v-text-field
+                v-model="title"
+                label="Insira o titulo da tarefa"
+              ></v-text-field>
             </v-flex>
           </v-layout>
           <v-layout v-if="title" row wrap>
             <v-flex xs12>
               <v-radio-group v-model="radioGroup" row>
                 <v-radio
-                  v-for="(n,index) in optionList"
+                  v-for="(n, index) in optionList"
                   :key="index"
                   :label="`${n.text}`"
                   :value="n.type"
@@ -23,7 +26,10 @@
           </v-layout>
           <v-layout v-if="title" row>
             <v-flex grow pa-1>
-              <v-text-field v-model="text" label="Insira a frase da sua tarefa"></v-text-field>
+              <v-text-field
+                v-model="text"
+                label="Insira a frase da sua tarefa"
+              ></v-text-field>
             </v-flex>
             <v-flex shrink pa-1>
               <v-btn @click="addingNewTask" icon>
@@ -37,7 +43,12 @@
         <v-container>
           <v-layout v-for="(task, index) in tasks" :key="index" row>
             <v-flex grow pa-1>
-              <v-checkbox v-if="task.type === 'checkbox'" :label="task.text" disabled hide-details />
+              <v-checkbox
+                v-if="task.type === 'checkbox'"
+                :label="task.text"
+                disabled
+                hide-details
+              />
               <v-text-field v-else v-model="task.text" disabled></v-text-field>
             </v-flex>
             <v-flex shrink pa-1>
