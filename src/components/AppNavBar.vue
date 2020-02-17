@@ -21,49 +21,45 @@
             <v-list-tile-content v-if="!mini"></v-list-tile-content>
           </router-link>
         </v-list-tile>
-        <v-list-group
-          transition="slide-y-transition"
-          v-for="item in items"
-          v-model="item.active"
-          :key="item.title"
-          :prepend-icon="item.action"
-        >
-          <template v-slot:activator>
-            <v-list-tile>
-              <v-list-tile-content>
-                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </template>
-        </v-list-group>
+        <v-list-tile>
+          <v-btn flat @click="activatedCard">Criar nova tarefa</v-btn>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+    <CreateCards :active="createTask" />
   </nav>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import CreateCard from "./CreateCard.vue";
+import CreateCards from "./CreateCard.vue";
 export default Vue.extend({
   name: "the-navbar",
+  components: {
+    CreateCards
+  },
+  computed: {
+    muted() {
+      return this.$store.state.refreshData;
+    }
+  },
   data() {
     return {
       drawer: false,
       mini: false,
       createTask: false,
-      iconColor: "#000",
-      items: [
-        {
-          action: "home",
-          title: "Onboarding",
-          active: false
-        }
-      ]
+      iconColor: "#000"
     };
   },
   methods: {
     handleCloseDrawer() {
       this.drawer = false;
+    },
+    refreshData() {
+      this.createTask = false;
+    },
+    activatedCard() {
+      this.createTask = true;
     },
     outsideClickClose(e) {
       const toggleClick = document
@@ -85,6 +81,9 @@ export default Vue.extend({
       } else {
         window.removeEventListener("click", this.outsideClickClose);
       }
+    },
+    muted() {
+      this.refreshData();
     }
   }
 });
