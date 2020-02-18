@@ -1,12 +1,12 @@
 <template>
   <v-container fluid grid-list-md>
     <v-layout row wrap>
-      <v-flex v-show="lists.length === 0" xs12>
+      <v-flex v-show="tasks.length === 0" xs12>
         <v-card>
           <v-card-title>Crie o seu primeiro card de tarefas!!!</v-card-title>
         </v-card>
       </v-flex>
-      <v-flex v-for="(card,index) in lists" :key="index" xs6>
+      <v-flex v-for="(card,index) in tasks" :key="index" xs6>
         <v-card>
           <v-card-title primary-title>{{ card.title }}</v-card-title>
           <v-card-text v-for="item in card.items" :key="item.id">
@@ -53,25 +53,24 @@ export default Vue.extend({
   },
   data: () => ({
     active: false,
-    lists: [],
     task: null
   }),
   created() {
-    this.lists = JSON.parse(localStorage.getItem("lists"));
-    this.$on("refreshData", this.refreshData);
+    this.$store.commit("refreshData");
   },
   computed: {
     muted() {
-      return this.$store.state.refreshData;
+      return this.$store.state.closeModal;
+    },
+    tasks() {
+      return this.$store.state.lists;
     }
   },
   methods: {
     excludeCard(id) {
       this.$store.dispatch("excludeCard", id);
-      this.lists = JSON.parse(localStorage.getItem("lists"));
     },
     refreshData() {
-      this.lists = JSON.parse(localStorage.getItem("lists"));
       this.active = false;
     },
     editingTask(card) {
@@ -84,7 +83,7 @@ export default Vue.extend({
       this.task = null;
     },
     finishTask(item) {
-      let list = JSON.parse(localStorage.getItem("lists"));
+      let list = this.$store.getters.getTasks;
       list.forEach(child => {
         child.items.forEach(subChild => {
           if (subChild.id === item.id) {
