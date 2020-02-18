@@ -140,6 +140,13 @@ export default Vue.extend({
       this.tasks = [];
       this.task = {};
     },
+    cleaningAllData() {
+      this.title = null;
+      this.text = null;
+      this.tasks = [];
+      this.active = false;
+      this.task = {};
+    },
     saveAllTasks() {
       if (!this.title || !this.radioGroup) {
         this.snackbar = true;
@@ -169,12 +176,8 @@ export default Vue.extend({
         });
       }
 
-      localStorage.setItem("lists", JSON.stringify(items));
-      this.title = null;
-      this.text = null;
-      this.tasks = [];
-      this.active = false;
-      this.task = {};
+      this.$store.dispatch("savingNewdata", items);
+      this.cleaningAllData();
       this.$store.dispatch("refreshData");
     }
   },

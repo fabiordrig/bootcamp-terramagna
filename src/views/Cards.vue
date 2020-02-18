@@ -91,8 +91,7 @@ export default Vue.extend({
           }
         });
       });
-      localStorage.setItem("lists", JSON.stringify(list));
-      this.refreshData();
+      this.$store.dispatch("savingNewdata", list);
     }
   },
   watch: {
