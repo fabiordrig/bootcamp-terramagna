@@ -40,7 +40,7 @@ export default Vue.extend({
   },
   computed: {
     muted() {
-      return this.$store.state.refreshData;
+      return this.$store.state.closeModal;
     }
   },
   data() {

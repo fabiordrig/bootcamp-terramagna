@@ -37,11 +37,17 @@
         <v-container>
           <v-layout v-for="(task, index) in tasks" :key="index" row>
             <v-flex grow pa-1>
-              <v-checkbox v-if="task.type === 'checkbox'" :label="task.text" disabled hide-details />
+              <v-checkbox
+                v-if="task.type === 'checkbox'"
+                :input-value="task.result"
+                :label="task.text"
+                disabled
+                hide-details
+              />
               <v-text-field v-else v-model="task.text" disabled></v-text-field>
             </v-flex>
             <v-flex shrink pa-1>
-              <v-btn @click="excludeTask(task.id)" icon>
+              <v-btn @click="excludeTask(task.id,tasks)" icon>
                 <v-icon>close</v-icon>
               </v-btn>
             </v-flex>
@@ -119,20 +125,20 @@ export default Vue.extend({
       this.text = null;
       this.tasks = this.task.items;
     },
-    excludeTask(id) {
+    excludeTask(id, tasks) {
       let payload = {
         id: id,
-        tasks: this.tasks
+        tasks: tasks
       };
-      this.$store.dispatch("excludeTask", payload).then(newTasks => {
-        this.tasks = newTasks;
-      });
+      this.$store.dispatch("excludeTask", payload);
+      this.tasks = this.$store.getters.getItems;
     },
     closeModal() {
-      this.$store.dispatch("refreshData");
+      this.$store.commit("closeModal");
       this.title = null;
       this.text = null;
       this.tasks = [];
+      this.task = {};
     },
     saveAllTasks() {
       if (!this.title || !this.radioGroup) {
@@ -140,7 +146,7 @@ export default Vue.extend({
         return false;
       }
 
-      let items = JSON.parse(localStorage.getItem("lists"));
+      let items = this.$store.getters.getTasks;
 
       if (!this.task) {
         let newTask = {
@@ -168,11 +174,12 @@ export default Vue.extend({
       this.text = null;
       this.tasks = [];
       this.active = false;
+      this.task = {};
       this.$store.dispatch("refreshData");
     }
   },
   watch: {
-    task() {
+    task(value) {
       this.setValue();
     }
   }
