@@ -13,3 +13,12 @@ export interface Tasks {
   text: String;
   tasks: Array<Item>;
 }
+
+export const enum EVENTS {
+  CLICK = "click"
+}
+
+export const enum STATE {
+  DONE = "DONE",
+  NOT_DONE = "NOT_DONE"
+}
