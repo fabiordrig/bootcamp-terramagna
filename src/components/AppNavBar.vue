@@ -33,6 +33,7 @@
 <script lang="ts">
 import Vue from "vue";
 import CreateCards from "./CreateCard.vue";
+import { EVENTS } from "@/@types";
 export default Vue.extend({
   name: "the-navbar",
   components: {
@@ -62,14 +63,11 @@ export default Vue.extend({
       this.createTask = true;
     },
     outsideClickClose(e) {
-      const toggleClick = document
-        .querySelector(".js-drawer-toggle")
-        .contains(e.target);
       const drawerClick = document
         .querySelector(".js-drawer")
         .contains(e.target);
 
-      if (!toggleClick && !drawerClick) {
+      if (drawerClick) {
         this.handleCloseDrawer();
       }
     }
@@ -77,9 +75,9 @@ export default Vue.extend({
   watch: {
     drawer(newValue, oldValue) {
       if (newValue) {
-        window.addEventListener("click", this.outsideClickClose);
+        window.addEventListener(EVENTS.CLICK, this.outsideClickClose);
       } else {
-        window.removeEventListener("click", this.outsideClickClose);
+        window.removeEventListener(EVENTS.CLICK, this.outsideClickClose);
       }
     },
     muted() {

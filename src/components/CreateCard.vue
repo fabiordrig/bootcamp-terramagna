@@ -70,7 +70,7 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { Tasks } from "@/@types";
+import { Tasks, STATE } from "@/@types";
 import { newId } from "@/utils";
 
 export default Vue.extend({
@@ -112,7 +112,7 @@ export default Vue.extend({
         id: newId(),
         text: this.text,
         type: this.radioGroup,
-        state: "NOT_DONE",
+        state: STATE.DONE,
         result: null,
         doneAt: null
       };
@@ -135,10 +135,7 @@ export default Vue.extend({
     },
     closeModal() {
       this.$store.commit("closeModal");
-      this.title = null;
-      this.text = null;
-      this.tasks = [];
-      this.task = {};
+      this.cleaningAllData();
     },
     cleaningAllData() {
       this.title = null;
