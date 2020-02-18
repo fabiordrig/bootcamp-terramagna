@@ -14,6 +14,10 @@ export default new Vuex.Store({
     closeModal(state) {
       state.closeModal = !state.closeModal;
     },
+    savingNewdata(state, payload) {
+      localStorage.setItem("lists", JSON.stringify(payload));
+      state.lists = JSON.parse(localStorage.getItem("lists"));
+    },
     refreshData(state) {
       state.lists = JSON.parse(localStorage.getItem("lists"));
       state.closeModal = !state.closeModal;
@@ -37,6 +41,9 @@ export default new Vuex.Store({
     },
     excludeCard({ commit }, payload) {
       commit("excludeCard", payload);
+    },
+    savingNewdata({ commit }, payload) {
+      commit("savingNewdata", payload);
     },
     excludeTask({ commit }, payload) {
       commit("excludeTask", payload);
